@@ -32,4 +32,27 @@ public class methAttributes {
     public void setMethodType(String methodType) {
         this.methodType = methodType;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        methAttributes that = (methAttributes) o;
+
+        if (controllerName != null ? !controllerName.equals(that.controllerName) : that.controllerName != null)
+            return false;
+        if (methodName != null ? !methodName.equals(that.methodName) : that.methodName != null) return false;
+        if (methodType != null ? !methodType.equals(that.methodType) : that.methodType != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = controllerName.hashCode();
+        result = 31 * result + methodName.hashCode();
+        result = 31 * result + methodType.hashCode();
+        return result;
+    }
 }

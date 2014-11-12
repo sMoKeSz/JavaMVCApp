@@ -1,7 +1,12 @@
 package ro.z2h.controller;
 
 import ro.z2h.annotation.MyController;
-import ro.z2h.annotation.MyRequestMethod;
+        import ro.z2h.annotation.MyRequestMethod;
+        import ro.z2h.domain.Employee;
+        import ro.z2h.service.EmployeeServiceImpl;
+
+        import java.util.ArrayList;
+        import java.util.List;
 
 /**
  * Created by user on 11/11/2014.
@@ -9,15 +14,19 @@ import ro.z2h.annotation.MyRequestMethod;
 
 @MyController(urlPath = "/employee")
 public class EmployeeController {
+    EmployeeServiceImpl objEmployee = new EmployeeServiceImpl();
 
     @MyRequestMethod(urlPath = "/all")
-    public String getAllEmployees(){
+    public List<Employee> getAllEmployees() {
 
-        return "allEmployees";
+        return objEmployee.findAllEmployees();
     }
 
     @MyRequestMethod(urlPath = "/one")
-    public String getOneEmployee(){
-        return "oneRandomEmployee";
+    public Employee getOneEmployee() {
+
+        return objEmployee.findOneEmployee(100l);
     }
+
+
 }
