@@ -4,7 +4,6 @@ ro\z2h\utils\ResultSetToPojoConverter.class
 ro\z2h\views\EmployeeView.class
 ro\z2h\controller\DepartmentController.class
 ro\z2h\fmk\MethodAttributes.class
-ro\z2h\fmk\methAttributes.class
 ro\z2h\utils\DatabaseManager.class
 ro\z2h\fmk\AnnotationScanUtils.class
 ro\z2h\dao\JobDao.class

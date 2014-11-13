@@ -9,14 +9,14 @@ import java.util.HashMap;
 public class DatabaseManager {
     public static Connection getConnection(String username, String password) {
 
-        Connection con = null;
-        try {
-            con = DriverManager.getConnection(
-                    "jdbc:oracle:thin:@10.6.33.102:1521:orcl",
-                    username,
-                    password);
+            Connection con = null;
+            try {
+                con = DriverManager.getConnection(
+                        "jdbc:oracle:thin:@10.6.33.102:1521:orcl",
+                        username,
+                        password);
 
-        } catch (SQLException e) {
+            } catch (SQLException e) {
             e.printStackTrace();
         }
 

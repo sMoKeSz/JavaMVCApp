@@ -13,20 +13,21 @@ import ro.z2h.annotation.MyController;
  */
 
 @MyController(urlPath = "/employee")
-public class EmployeeController {
-    EmployeeServiceImpl objEmployee = new EmployeeServiceImpl();
 
-    @MyRequestMethod(urlPath = "/all")
-    public List<Employee> getAllEmployees() {
+    public class EmployeeController {
+        EmployeeServiceImpl objEmployee = new EmployeeServiceImpl();
 
-        return objEmployee.findAllEmployees();
-    }
+        @MyRequestMethod(urlPath = "/all")
+        public List<Employee> getAllEmployees() {
 
-    @MyRequestMethod(urlPath = "/one")
-    public Employee getOneEmployee() {
+            return objEmployee.findAllEmployees();
+        }
+        @MyRequestMethod(urlPath = "/one")
+    public Employee getOneEmployee(int x) {
 
         return objEmployee.findOneEmployee(100l);
     }
+
 
 
 }

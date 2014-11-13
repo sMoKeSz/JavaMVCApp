@@ -3,24 +3,17 @@ package ro.z2h;
 import org.codehaus.jackson.map.ObjectMapper;
 import ro.z2h.annotation.MyController;
 import ro.z2h.annotation.MyRequestMethod;
-import ro.z2h.controller.DepartmentController;
-import ro.z2h.controller.EmployeeController;
-import ro.z2h.domain.Department;
 import ro.z2h.fmk.AnnotationScanUtils;
 import ro.z2h.fmk.MethodAttributes;
-import ro.z2h.fmk.methAttributes;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,6 +63,8 @@ public class DispatcherServlet extends HttpServlet{
     //  Unde ar trb ar trebui apelat un app controller + primire raspuns.
     private Object dispatch(HttpServletRequest req, HttpServletResponse resp) {
         String pathInfo = req.getPathInfo();
+        req.getParameterMap();
+
         MethodAttributes methodAttributes = annotationMap.get(pathInfo);
 
 
@@ -77,7 +72,7 @@ public class DispatcherServlet extends HttpServlet{
             if(methodAttributes!=null) {
                 Class<?> appControllerClass = Class.forName(methodAttributes.getControllerClass());
                 Object appControllerInstance = appControllerClass.newInstance();
-                Method controllerMethod = appControllerClass.getMethod(methodAttributes.getMethodName());
+                Method controllerMethod = appControllerClass.getMethod(methodAttributes.getMethodName(),methodAttributes.getParams());
                 return controllerMethod.invoke(appControllerInstance);
 
             }
@@ -118,7 +113,9 @@ public class DispatcherServlet extends HttpServlet{
                             obj.setControllerClass(aClass.getName());
                             obj.setMethodType(meth.methodType());
                             obj.setMethodName(method.getName());
+                            obj.setParams(method.getParameterTypes());
                             annotationMap.put(annotation.urlPath() + meth.urlPath(), obj);
+
                         }
                     }
                 }
