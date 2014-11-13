@@ -39,4 +39,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         return employee;
     }
+
+    @Override
+    public void deleteOneEmployee(Long id) {
+        Employee employee = new Employee();
+        employee = findOneEmployee(id);
+        objEmpDao.deleteEmployee(employee,con);
+    }
 }

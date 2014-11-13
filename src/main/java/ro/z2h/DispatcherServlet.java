@@ -14,8 +14,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
+import java.lang.reflect.Parameter;
+import java.util.*;
 
 /**
  * Created by user on 11/11/2014.
@@ -72,11 +72,20 @@ public class DispatcherServlet extends HttpServlet{
             if(methodAttributes!=null) {
                 Class<?> appControllerClass = Class.forName(methodAttributes.getControllerClass());
                 Object appControllerInstance = appControllerClass.newInstance();
-                Method controllerMethod = appControllerClass.getMethod(methodAttributes.getMethodName(),methodAttributes.getParams());
-                return controllerMethod.invoke(appControllerInstance);
+
+               Method controllerMethod = appControllerClass.getMethod(methodAttributes.getMethodName(),methodAttributes.getParams());
+
+                Parameter[] realParameters = controllerMethod.getParameters();
+                List<String> paramList = new ArrayList<String>();
+                for (Parameter realParameter : realParameters) {
+                  paramList.add(req.getParameter(realParameter.getName()));
+                }
+                return controllerMethod.invoke(appControllerInstance,(String[])paramList.toArray(new String[0]));
 
             }
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
@@ -84,10 +93,7 @@ public class DispatcherServlet extends HttpServlet{
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
         }
-
 
 
         return "Hello";
@@ -115,6 +121,7 @@ public class DispatcherServlet extends HttpServlet{
                             obj.setMethodName(method.getName());
                             obj.setParams(method.getParameterTypes());
                             annotationMap.put(annotation.urlPath() + meth.urlPath(), obj);
+
 
                         }
                     }
